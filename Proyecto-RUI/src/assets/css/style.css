@@ -5883,3 +5883,8 @@ File: scss
     text-align: center;
     margin-top: 10px;
     overflow: hidden; } }
+
+    .menu{
+      padding-left: 75%;
+      padding-top: 10%;
+    }
