@@ -13,6 +13,7 @@ import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { RolesComponent } from './pages/roles/roles.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AuthComponent } from './auth/auth/auth.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     RolesComponent,
     UsuariosComponent,
     NotFoundComponent,
+    AuthComponent,
 
   ],
   imports: [
