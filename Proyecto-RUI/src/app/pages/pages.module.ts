@@ -8,6 +8,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -23,7 +24,8 @@ import { PagesComponent } from './pages.component';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     DashboardComponent,
