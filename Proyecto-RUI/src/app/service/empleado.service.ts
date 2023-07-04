@@ -10,25 +10,25 @@ export class EmpleadoService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<any[]> {
+  getEmpleados(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  getUser(id: number): Observable<any> {
+  getEmpleado(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<any>(url);
   }
 
-  createUser(user: any): Observable<any> {
+  createEmpleado(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  updateUser(user: any): Observable<any> {
+  updateEmpleado(user: any): Observable<any> {
     const url = `${this.apiUrl}/${user.id}`;
     return this.http.put<any>(url, user);
   }
 
-  deleteUser(id: number): Observable<any> {
+  deleteEmpleado(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url);
   }
