@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "empleados": [
+    {
+      "nombre": "Oscar",
+      "apellido": "Nogales",
+      "cedula": 1755694096,
+      "correo": "blowinrayn@gmail.com",
+      "fechaCreacion": "2023-07-04T17:03:48.658Z",
+      "id": 1
+    },
+    {
+      "nombre": "Henry",
+      "apellido": "Perez",
+      "cedula": 1755694096,
+      "correo": "alicia@gmail.com",
+      "fechaCreacion": "2023-07-04T17:08:21.588Z",
+      "id": 2
+    }
+  ]
+}
