@@ -18,20 +18,21 @@
   },
   "empleados": [
     {
-      "nombre": "Oscar",
-      "apellido": "Nogales",
-      "cedula": 1755694096,
-      "correo": "blowinrayn@gmail.com",
-      "fechaCreacion": "2023-07-04T17:03:48.658Z",
-      "id": 1
-    },
-    {
-      "nombre": "Henry",
-      "apellido": "Perez",
-      "cedula": 1755694096,
-      "correo": "alicia@gmail.com",
+      "nombre": "Sebas",
+      "apellido": "Vaca",
+      "cedula": 123123123,
+      "correo": "sebas@gmail.com",
       "fechaCreacion": "2023-07-04T17:08:21.588Z",
       "id": 2
+    },
+    {
+      "nombre": "asdasd",
+      "apellido": "asdasd",
+      "cedula": 213123,
+      "correo": "asdasd@gmail.com",
+      "fechaCreacion": "2023-07-04T22:33:59.451Z",
+      "id": 3
     }
-  ]
+  ],
+  "roles": []
 }
