@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -18,6 +19,7 @@ import { PagesModule } from './pages/pages.module';
     SharedModule,
     AppRoutingModule,
     PagesModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

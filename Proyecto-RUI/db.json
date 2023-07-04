@@ -1,0 +1,29 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "empleados": [
+    {
+      "nombre": "Sebastian",
+      "apellido": "Vaca Almeida",
+      "cedula": 1754587036,
+      "correo": "@gmail.com",
+      "fechaCreacion": "2023-07-04T05:03:50.317Z",
+      "id": 1
+    }
+  ]
+}
