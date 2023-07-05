@@ -1,0 +1,93 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "empleados": [
+    {
+      "nombre": "Sebastian",
+      "apellido": "Vaca Almeida",
+      "cedula": 1754587036,
+      "correo": "@gmail.com",
+      "fechaCreacion": "2023-07-05T00:45:44.359Z",
+      "id": 1
+    },
+    {
+      "nombre": "Oscar",
+      "apellido": "Nogales",
+      "cedula": 1234567890,
+      "correo": "oscargmail.com",
+      "fechaCreacion": "2023-07-05T01:52:34.008Z",
+      "id": 2
+    },
+    {
+      "nombre": "Lenin",
+      "apellido": "Montalvo",
+      "cedula": 1892731,
+      "correo": "Lenin@gmail.com",
+      "fechaCreacion": "2023-07-05T01:54:49.063Z",
+      "id": 3
+    }
+  ],
+  "roles": [
+    {
+      "nombre": "creador de insumos",
+      "descripcion": "crear insumos",
+      "fechaCreacion": "2023-07-05T00:46:48.362Z",
+      "id": 1
+    },
+    {
+      "nombre": "Recursos Humanos",
+      "descripcion": "Crear Roles",
+      "fechaCreacion": "2023-07-05T01:55:31.945Z",
+      "id": 2
+    },
+    {
+      "nombre": "xd",
+      "descripcion": "xd",
+      "fechaCreacion": "2023-07-05T04:41:05.261Z",
+      "id": 3
+    }
+  ],
+  "insumos": [
+    {
+      "codigo": "001",
+      "nombre": "laptop",
+      "descripcion": "para el uso de desarrollo",
+      "asignadoA": "Sebastian",
+      "fechaCreacion": "2023-07-05T00:46:11.214Z",
+      "id": 1
+    },
+    {
+      "codigo": "022",
+      "nombre": "silla",
+      "descripcion": "para sentarse",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T01:54:33.080Z",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "nombre": "Oscar",
+      "email": "oscar0694nogales@gmail.com",
+      "contrasenia": "123",
+      "rol": "Recursos Humanos",
+      "fechaCreacion": "2023-07-05T04:51:12.871Z",
+      "id": 1
+    }
+  ]
+}
