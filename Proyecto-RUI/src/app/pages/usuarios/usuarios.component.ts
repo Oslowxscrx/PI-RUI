@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { RolService } from 'src/app/service/roles.service';
 import { UsersService } from 'src/app/service/users.service';
 
@@ -17,45 +16,59 @@ export class UsuariosComponent implements OnInit {
     fechaCreacion: ''
   };
 
-  usuarioIndex: number | null = null;
   usuarios: any[] = [];
-  roles: string[] = [];
+  modalAbierto = false;
+  roles: any[] = [];
 
-  constructor(private usersService: UsersService, private rolService: RolService) { }
+  constructor(private rolesService: RolService, private usersService: UsersService) { }
 
   ngOnInit() {
-    this.obtenerUsuarios();
-    this.obtenerRoles();
+    this.getRoles();
+    this.getUsuarios();
   }
 
-  obtenerUsuarios() {
-    this.usersService.getUsers().subscribe((res: any[]) => {
-      this.usuarios = res;
+  getRoles() {
+    this.rolesService.getRoles().subscribe((data) => {
+      this.roles = data;
     });
   }
 
-  obtenerRoles() {
-    this.rolService.getRoles().subscribe((res: any[]) => {
-      this.roles = res;
+  getUsuarios() {
+    this.usersService.getUsers().subscribe((data) => {
+      this.usuarios = data;
     });
-  }
-
-  editarUsuario(usuario: any, index: number) {
-    this.usuarioIndex = index;
-    this.usuarioEditando = { ...usuario };
   }
 
   guardarUsuario() {
-    if (this.usuarioIndex !== null) {
-      this.usersService.updateUser(this.usuarioEditando).subscribe(() => {
-        this.obtenerUsuarios();
-      });
-    } else {
-      this.usersService.createUser(this.usuarioEditando).subscribe(() => {
-        this.obtenerUsuarios();
+    if (
+      this.usuarioEditando.nombre &&
+      this.usuarioEditando.email &&
+      this.usuarioEditando.contrasenia &&
+      this.usuarioEditando.rol
+    ) {
+      this.usuarioEditando.fechaCreacion = this.obtenerFechaActual();
+
+      this.usersService.createUser(this.usuarioEditando).subscribe((data) => {
+        this.usuarios.push(data);
+        this.limpiarFormulario();
+        this.modalAbierto = false;
       });
     }
-    this.usuarioIndex = null;
+  }
+
+  editarUsuario(usuario: any, index: number) {
+    this.usuarioEditando = { ...usuario };
+    this.modalAbierto = true;
+  }
+
+  eliminarUsuario(index: number) {
+    const usuario = this.usuarios[index];
+    this.usersService.deleteUser(usuario.id).subscribe(() => {
+      this.usuarios.splice(index, 1);
+    });
+  }
+
+  limpiarFormulario() {
     this.usuarioEditando = {
       nombre: '',
       email: '',
@@ -65,9 +78,8 @@ export class UsuariosComponent implements OnInit {
     };
   }
 
-  eliminarUsuario(index: number) {
-    this.usersService.deleteUser(index).subscribe(() => {
-      this.obtenerUsuarios();
-    });
+  obtenerFechaActual(): string {
+    const fecha = new Date();
+    return fecha.toISOString();
   }
 }
