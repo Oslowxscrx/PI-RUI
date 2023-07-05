@@ -18,21 +18,70 @@
   },
   "empleados": [
     {
-      "nombre": "Sebas",
-      "apellido": "Vaca",
-      "cedula": 123123123,
-      "correo": "sebas@gmail.com",
-      "fechaCreacion": "2023-07-04T17:08:21.588Z",
+      "nombre": "Sebastian",
+      "apellido": "Vaca Almeida",
+      "cedula": 1754587036,
+      "correo": "@gmail.com",
+      "fechaCreacion": "2023-07-05T00:45:44.359Z",
+      "id": 1
+    },
+    {
+      "nombre": "Oscar",
+      "apellido": "Nogales",
+      "cedula": 1234567890,
+      "correo": "oscargmail.com",
+      "fechaCreacion": "2023-07-05T01:52:34.008Z",
       "id": 2
     },
     {
-      "nombre": "asdasd",
-      "apellido": "asdasd",
-      "cedula": 213123,
-      "correo": "asdasd@gmail.com",
-      "fechaCreacion": "2023-07-04T22:33:59.451Z",
+      "nombre": "Lenin",
+      "apellido": "Montalvo",
+      "cedula": 1892731,
+      "correo": "Lenin@gmail.com",
+      "fechaCreacion": "2023-07-05T01:54:49.063Z",
       "id": 3
     }
   ],
-  "roles": []
+  "roles": [
+    {
+      "nombre": "creador de insumos",
+      "descripcion": "crear insumos",
+      "fechaCreacion": "2023-07-05T00:46:48.362Z",
+      "id": 1
+    },
+    {
+      "nombre": "Recursos Humanos",
+      "descripcion": "Crear Roles",
+      "fechaCreacion": "2023-07-05T01:55:31.945Z",
+      "id": 2
+    }
+  ],
+  "insumos": [
+    {
+      "codigo": "001",
+      "nombre": "laptop",
+      "descripcion": "para el uso de desarrollo",
+      "asignadoA": "Sebastian",
+      "fechaCreacion": "2023-07-05T00:46:11.214Z",
+      "id": 1
+    },
+    {
+      "codigo": "022",
+      "nombre": "silla",
+      "descripcion": "para sentarse",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T01:54:33.080Z",
+      "id": 2
+    }
+  ],
+  "users": [
+    {
+      "nombre": "asd",
+      "email": "gsa.vaca@yavirac.edu.ec",
+      "contrasenia": "1234",
+      "rol": "[object Object]",
+      "fechaCreacion": "",
+      "id": 1
+    }
+  ]
 }
