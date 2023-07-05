@@ -13,7 +13,8 @@ export class InsumosComponent implements OnInit {
     nombre: '',
     descripcion: '',
     asignadoA: '',
-    fechaCreacion: ''
+    fechaCreacion: '',
+    vidaUtilAnios: 0
   };
 
   insumoIndex: number | null = null;
@@ -21,6 +22,9 @@ export class InsumosComponent implements OnInit {
   modalAbierto = false;
 
   empleados: any[] = [];
+
+  currentPage = 1;
+  itemsPerPage = 5;
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -45,7 +49,13 @@ export class InsumosComponent implements OnInit {
   }
 
   guardarInsumo() {
-    if (this.insumoEditando.codigo && this.insumoEditando.nombre && this.insumoEditando.descripcion && this.insumoEditando.asignadoA) {
+    if (
+      this.insumoEditando.codigo &&
+      this.insumoEditando.nombre &&
+      this.insumoEditando.descripcion &&
+      this.insumoEditando.asignadoA &&
+      this.insumoEditando.vidaUtilAnios >= 0
+    ) {
       if (this.insumoIndex !== null && this.insumoIndex !== undefined) {
         this.insumos[this.insumoIndex] = { ...this.insumoEditando };
         this.insumoService.updateInsumo(this.insumoEditando).subscribe(() => {
@@ -58,6 +68,10 @@ export class InsumosComponent implements OnInit {
           this.insumos.push(data);
           this.limpiarFormulario();
           this.modalAbierto = false;
+          const totalPages = Math.ceil(this.insumos.length / this.itemsPerPage);
+          if (this.currentPage > totalPages) {
+            this.currentPage = totalPages;
+          }
         });
       }
     }
@@ -73,6 +87,10 @@ export class InsumosComponent implements OnInit {
     const insumo = this.insumos[index];
     this.insumoService.deleteInsumo(insumo.id).subscribe(() => {
       this.insumos.splice(index, 1);
+      const totalPages = Math.ceil(this.insumos.length / this.itemsPerPage);
+      if (this.currentPage > totalPages) {
+        this.currentPage = totalPages;
+      }
     });
   }
 
@@ -82,12 +100,24 @@ export class InsumosComponent implements OnInit {
       nombre: '',
       descripcion: '',
       asignadoA: '',
-      fechaCreacion: ''
+      fechaCreacion: '',
+      vidaUtilAnios: 0
     };
+    this.insumoIndex = null;
   }
 
-  obtenerFechaActual(): string {
+  obtenerFechaActual() {
     const fecha = new Date();
-    return fecha.toISOString(); // Formato ISO de la fecha
+    return fecha.toISOString();
+  }
+
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+  }
+
+  getPaginatedInsumos() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.insumos.slice(startIndex, endIndex);
   }
 }
