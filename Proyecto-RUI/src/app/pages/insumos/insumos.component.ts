@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from 'src/app/service/empleado.service';
 import { InsumoService } from 'src/app/service/insumos.service';
 
+
 @Component({
   selector: 'app-insumos',
   templateUrl: './insumos.component.html',
@@ -23,8 +24,11 @@ export class InsumosComponent implements OnInit {
 
   empleados: any[] = [];
 
+
   currentPage = 1;
   itemsPerPage = 5;
+
+
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -120,4 +124,6 @@ export class InsumosComponent implements OnInit {
     const endIndex = startIndex + this.itemsPerPage;
     return this.insumos.slice(startIndex, endIndex);
   }
+
+
 }
