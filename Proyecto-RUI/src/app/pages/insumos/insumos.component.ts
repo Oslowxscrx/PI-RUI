@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from 'src/app/service/empleado.service';
 import { InsumoService } from 'src/app/service/insumos.service';
 
+
 @Component({
   selector: 'app-insumos',
   templateUrl: './insumos.component.html',
@@ -21,6 +22,7 @@ export class InsumosComponent implements OnInit {
   modalAbierto = false;
 
   empleados: any[] = [];
+
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -90,4 +92,6 @@ export class InsumosComponent implements OnInit {
     const fecha = new Date();
     return fecha.toISOString(); // Formato ISO de la fecha
   }
+
+
 }
