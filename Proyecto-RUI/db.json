@@ -1,0 +1,143 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "empleados": [
+    {
+      "nombre": "Sebastian",
+      "apellido": "Vaca Almeida",
+      "cedula": 1754587036,
+      "correo": "@gmail.com",
+      "fechaCreacion": "2023-07-05T00:45:44.359Z",
+      "id": 1
+    },
+    {
+      "nombre": "Oscar",
+      "apellido": "Nogales",
+      "cedula": 1234567890,
+      "correo": "oscargmail.com",
+      "fechaCreacion": "2023-07-05T01:52:34.008Z",
+      "id": 2
+    },
+    {
+      "nombre": "Lenin",
+      "apellido": "Montalvo",
+      "cedula": 1892731,
+      "correo": "Lenin@gmail.com",
+      "fechaCreacion": "2023-07-05T01:54:49.063Z",
+      "id": 3
+    }
+  ],
+  "roles": [
+    {
+      "nombre": "creador de insumos",
+      "descripcion": "crear insumos",
+      "fechaCreacion": "2023-07-05T00:46:48.362Z",
+      "id": 1
+    },
+    {
+      "nombre": "Recursos Humanos",
+      "descripcion": "Crear Roles",
+      "fechaCreacion": "2023-07-05T01:55:31.945Z",
+      "id": 2
+    }
+  ],
+  "insumos": [
+    {
+      "codigo": 1,
+      "nombre": "Celular",
+      "descripcion": "Samsung A10 ",
+      "asignadoA": "Sebastian",
+      "fechaCreacion": "2023-07-05T05:31:22.604Z",
+      "vidaUtilAnios": 9,
+      "id": 1
+    },
+    {
+      "codigo": 170202,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T05:56:30.333Z",
+      "vidaUtilAnios": 0,
+      "id": 2
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Sebastian",
+      "fechaCreacion": "2023-07-05T05:56:43.022Z",
+      "vidaUtilAnios": 0,
+      "id": 3
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Lenin",
+      "fechaCreacion": "2023-07-05T05:56:53.557Z",
+      "vidaUtilAnios": 0,
+      "id": 4
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T05:57:01.029Z",
+      "vidaUtilAnios": 0,
+      "id": 5
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Sebastian",
+      "fechaCreacion": "2023-07-05T05:57:08.597Z",
+      "vidaUtilAnios": 0,
+      "id": 6
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T05:57:15.852Z",
+      "vidaUtilAnios": 0,
+      "id": 7
+    },
+    {
+      "codigo": 170208,
+      "nombre": "Oscar",
+      "descripcion": "xd",
+      "asignadoA": "Oscar",
+      "fechaCreacion": "2023-07-05T05:57:23.029Z",
+      "vidaUtilAnios": 0,
+      "id": 8
+    }
+  ],
+  "users": [
+    {
+      "nombre": "Oscar",
+      "email": "oscar0694nogales@gmail.com",
+      "contrasenia": "123",
+      "rol": "creador de insumos",
+      "fechaCreacion": "2023-07-05T05:05:20.253Z",
+      "id": 1
+    }
+  ]
+}

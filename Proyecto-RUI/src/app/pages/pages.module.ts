@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SharedModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   exports: [
     DashboardComponent,

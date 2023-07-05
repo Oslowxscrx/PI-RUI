@@ -18,6 +18,11 @@ export class EmpleadosComponent implements OnInit {
   empleadoIndex: number | null = null;
   empleados: any[] = [];
   modalAbierto = false;
+  correoInvalido: boolean | undefined;
+  nombreValido = true;
+  apellidoValido = true;
+  nombreInvalido = false;
+  apellidoInvalido = false;
 
   constructor(private empleadoService: EmpleadoService) { }
 
@@ -32,6 +37,31 @@ export class EmpleadosComponent implements OnInit {
   }
 
   guardarEmpleado() {
+    //Verificar que la cedula contenga 10 digitos
+    const cedulaValida = /^\d{10}$/.test(this.empleadoEditando.cedula);
+    if (!cedulaValida) {
+    // Mostrar mensaje de error o tomar la acción correspondiente
+    console.log('La cédula debe contener exactamente 10 dígitos numéricos.');
+    return;
+    }
+     // Verificar si el correo contiene una "@"
+    if (!this.empleadoEditando.correo.includes('@')) {
+    // Mostrar alerta de error
+      this.correoInvalido = true;
+    return;
+    }
+    
+    
+     // Verificar que el nombre y apellido solo contengan letras
+      this.nombreInvalido = !/^[A-Za-z]+$/.test(this.empleadoEditando.nombre);
+      this.apellidoInvalido = !/^[A-Za-z]+$/.test(this.empleadoEditando.apellido);
+      if (this.nombreInvalido || this.apellidoInvalido) {
+      // Mostrar alerta de error
+      console.log('El nombre y el apellido solo pueden contener letras.');
+      return;
+      }
+    
+    
     if (this.empleadoEditando.nombre && this.empleadoEditando.apellido && this.empleadoEditando.cedula && this.empleadoEditando.correo) {
       if (this.empleadoIndex !== null && this.empleadoIndex !== undefined) {
         // Editar empleado existente
@@ -81,4 +111,5 @@ export class EmpleadosComponent implements OnInit {
       fechaCreacion: ''
     };
   }
+
 }
