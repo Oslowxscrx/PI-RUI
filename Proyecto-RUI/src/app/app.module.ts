@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth/auth.component';
 import { AuthModule } from './auth/auth.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     PagesModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
     // AuthModule
   ],
   providers: [],

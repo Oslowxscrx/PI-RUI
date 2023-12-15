@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Register } from 'src/app/interface/register/register';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-register',
@@ -15,10 +16,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   currentRegister = {} as Register;
 
   title = 'Nuevo Usuario';
-
+  hide:boolean = true;
   paramsSubscription!: Subscription;
 
   loading: boolean = true;
+  passwordEntered:boolean = false;
 
   // Variables de clase que son inyectadas por referencia
   // matcher = new MyErrorStateMatcher();
@@ -29,7 +31,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private errorStateMatcher: ErrorStateMatcher
   ) { }
+
+  errorMatcher = this.errorStateMatcher;
 
   ngOnInit(): void {
     this.initForm();
@@ -47,23 +52,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
           ],
         },
       ],
-      correoUsuario: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.email,
-            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'),
-          ],
-        },
-      ],
-      contraseñaUsuario: ['', [Validators.required]],
+      correoUsuario: ['', [Validators.required, Validators.email]],
+      contraseñaUsuario: ['', [Validators.required, Validators.minLength(5)]],
+      // confirmarContraseña: ['', [Validators.required]],
+    }, {
+      validators: this.passwordMatchValidator
     });
+
     this.formGroup.valueChanges.subscribe((val) => {
       this.currentRegister = val;
       console.log(val);
     });
   }
+
 
   ngOnDestroy(): void {
     if (this.paramsSubscription) {
@@ -83,4 +84,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.createUser();
     }
   }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('contraseñaUsuario')?.value;
+    const confirmPassword = formGroup.get('confirmarContraseña')?.value;
+
+    if (password !== confirmPassword) {
+      formGroup.get('confirmarContraseña')?.setErrors({ passwordMismatch: true });
+    } else {
+      formGroup.get('confirmarContraseña')?.setErrors(null);
+    }
+
+    return null;
+  }
+
+
+  onPasswordInput() {
+    this.passwordEntered = this.formGroup.get('contraseñaUsuario')?.value.trim().length > 0;
+  }
+
 }

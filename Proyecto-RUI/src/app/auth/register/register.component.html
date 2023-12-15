@@ -1,16 +1,51 @@
-<div class="w-full p-8 px-20 bg-white border-t-[1px] border-[#535a6650]">
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-        <label for="nombreUsuario">Username:</label>
-        <input type="text" id="nombreUsuario" formControlName="nombreUsuario">
+<div class="flex items-center justify-center h-screen">
+    <div class="w-full p-8 px-20 bg-white border-t-[1px] border-[#535a6650]">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <!-- Your form content here -->
 
-        <label for="correoUsuario">Email:</label>
-        <input type="email" id="correoUsuario" formControlName="correoUsuario">
+            <div class="ml-10 mr-10 relative">
+                <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">
+                Nombre de Usuario
+            </label>
+                <input class="appearance-none block w-full bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4" type="text" matInput formControlName="nombreUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off" spellcheck="false" placeholder="Nombre de usuario">
+                <mat-error *ngIf="formGroup.get('nombreUsuario')?.hasError('correoUsuario') && (formGroup.get('nombreUsuario')?.touched || formGroup.get('nombreUsuario')?.dirty)" class="text-sm">
+                    Por favor, ingrese un correo electrónico <strong>válido</strong>
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('nombreUsuario')?.hasError('required') && (formGroup.get('nombreUsuario')?.touched || formGroup.get('nombreUsuario')?.dirty)" class="text-sm">
+                    Este campo es <strong>requerido</strong>
+                </mat-error>
+            </div>
 
-        <label for="contraseñaUsuario">contraseña:</label>
-        <input type="password" id="contraseñaUsuario" formControlName="contraseñaUsuario">
+            <div class="ml-10 mr-10 relative">
+                <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">
+                Correo Electrónico
+            </label>
+                <input class="appearance-none block w-full bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4" type="email" matInput formControlName="correoUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off" spellcheck="false" placeholder="Correo Electrónico">
+                <mat-error *ngIf="formGroup.get('correoUsuario')?.hasError('correoUsuario') && (formGroup.get('email')?.touched || formGroup.get('correoUsuario')?.dirty)" class="text-sm">
+                    Por favor, ingrese un correo electrónico <strong>válido</strong>
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('correoUsuario')?.hasError('required') && (formGroup.get('correoUsuario')?.touched || formGroup.get('correoUsuario')?.dirty)" class="text-sm">
+                    Este campo es <strong>requerido</strong>
+                </mat-error>
+            </div>
 
+            <div class="ml-10 mr-10 relative">
+                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-password">
+                Contraseña
+              </label>
+                <div class="flex items-center">
+                    <input class="appearance-none block w-full bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4 mb-3" matInput [type]="hide ? 'password' : 'text'" formControlName="contraseñaUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                        spellcheck="false" placeholder="******************" (input)="onPasswordInput()">
+                    <button *ngIf="passwordEntered" class="card-actions" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" type="button" [attr.aria-pressed]="hide" style="position: absolute; right: 8px;">
+                  <!-- <mat-icon class="!text-neutral flex items-center justify-center">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> -->
+                </button>
+                </div>
+                <mat-error *ngIf="formGroup.get('contraseñaUsuario')?.hasError('required') && (formGroup.get('contraseñaUsuario')?.touched || formGroup.get('contraseñaUsuario')?.dirty)" class="text-sm">
+                    Este campo es <strong>requerido</strong>
+                </mat-error>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
-
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
