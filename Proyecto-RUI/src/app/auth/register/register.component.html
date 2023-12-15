@@ -1,0 +1,16 @@
+<div class="w-full p-8 px-20 bg-white border-t-[1px] border-[#535a6650]">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <label for="nombreUsuario">Username:</label>
+        <input type="text" id="nombreUsuario" formControlName="nombreUsuario">
+
+        <label for="correoUsuario">Email:</label>
+        <input type="email" id="correoUsuario" formControlName="correoUsuario">
+
+        <label for="contraseñaUsuario">contraseña:</label>
+        <input type="password" id="contraseñaUsuario" formControlName="contraseñaUsuario">
+
+
+        <button type="submit">Submit</button>
+    </form>
+
+</div>

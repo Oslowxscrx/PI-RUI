@@ -6,14 +6,16 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthComponent } from './auth/auth.component';
+import { AuthModule } from './auth/auth.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
+    // AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     PagesModule,
     HttpClientModule,
     FormsModule,
+    // AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
