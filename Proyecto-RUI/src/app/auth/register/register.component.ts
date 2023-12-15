@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   currentRegister = {} as Register;
 
-  title = 'Nuevo Usuario';
+  title = 'Registro';
   hide:boolean = true;
   paramsSubscription!: Subscription;
 
