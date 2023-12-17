@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Register } from 'src/app/interface/register/register';
+
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { User } from 'src/app/interface/user/users';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  currentRegister = {} as Register;
+  currentRegister = {} as User;
 
   title = 'Registro';
   hide:boolean = true;

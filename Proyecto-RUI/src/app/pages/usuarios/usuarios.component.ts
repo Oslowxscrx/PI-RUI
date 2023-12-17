@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Register } from 'src/app/interface/register/register';
+import { User } from 'src/app/interface/user/users';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { RolService } from 'src/app/service/roles.service';
-import { UsersService } from 'src/app/service/users.service';
+import { UsersService } from 'src/app/service/users/users.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -15,8 +15,9 @@ import { UsersService } from 'src/app/service/users.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  currentRegister = {} as Register;
+  currentRegister = {} as User;
 
+  users: User[] = [];
   title = 'Nuevo Registro';
   hide: boolean = true;
   paramsSubscription!: Subscription;
@@ -44,7 +45,7 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private rolesService: RolService,
-    private usersService: UsersService,
+    private _usersService: UsersService,
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _router: Router,
@@ -129,9 +130,32 @@ export class UsuariosComponent implements OnInit {
   }
 
   getUsuarios() {
-    this.usersService.getUsers().subscribe((data) => {
-      this.usuarios = data;
-    });
+    this.loading = true;
+    this._usersService.getUsers().subscribe({
+      next: (response: User[]) => {
+        console.log('usuarios',response);
+        this.handleResponse(response);
+      },
+      error: (error) => {
+        this.handleError(error);
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  private handleResponse(response: any): void {
+      this.users = response;
+    this.loading = false;
+  }
+
+  private handleError(error: any): void {
+    if (error.status === 404) {
+      console.error("Error al obtener usuarios:", error.error.message);
+      this.users = error.error.data
+    }
+    this.loading = false;
   }
 
   guardarUsuario() {
@@ -143,7 +167,7 @@ export class UsuariosComponent implements OnInit {
     ) {
       this.usuarioEditando.fechaCreacion = this.obtenerFechaActual();
 
-      this.usersService.createUser(this.usuarioEditando).subscribe((data) => {
+      this._usersService.createUser(this.usuarioEditando).subscribe((data) => {
         this.usuarios.push(data);
         this.limpiarFormulario();
         this.modalAbierto = false;
@@ -158,7 +182,7 @@ export class UsuariosComponent implements OnInit {
 
   eliminarUsuario(index: number) {
     const usuario = this.usuarios[index];
-    this.usersService.deleteUser(usuario.id).subscribe(() => {
+    this._usersService.deleteUser(usuario.id).subscribe(() => {
       this.usuarios.splice(index, 1);
     });
   }

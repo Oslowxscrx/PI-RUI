@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Register } from 'src/app/interface/register/register';
+import { User } from 'src/app/interface/user/users';
 import { environment } from 'src/enviroments/enviroment';
 
 @Injectable({
@@ -17,9 +17,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(register:Register): Observable<Register>{
-    return this.http.post<Register>( `${this.API_URL}/register`,
-    register,
+  register(user:User): Observable<User>{
+    return this.http.post<User>( `${this.API_URL}/register`,
+    user,
     this.httpOptions)
   }
 

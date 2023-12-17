@@ -16,7 +16,7 @@
         <tr>
           <th>Usuario</th>
           <th>Correo</th>
-          <th>Contraseña</th>
+          <!-- <th>Contraseña</th> -->
           <th>Rol a cumplir</th>
           <th>Fecha Creación</th>
           <th>Editar</th>
@@ -24,14 +24,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios; let i = index">
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.email }}</td>
-          <td>{{ usuario.contrasenia }}</td>
-          <td>{{ usuario.rol }}</td>
-          <td>{{ usuario.fechaCreacion }}</td>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ user.nombreUsuario }}</td>
+          <td>{{ user.correoUsuario }}</td>
+          <!-- <td>{{ usuario.contrasenia }}</td> -->
+          <td>{{ user.role }}</td>
+          <td>{{ user.createdAt }}</td>
           <td>
-            <button type="button" class="btn btn-primary" (click)="editarUsuario(usuario, i)" data-bs-toggle="modal"
+            <button type="button" class="btn btn-primary" (click)="editarUsuario(user, i)" data-bs-toggle="modal"
               data-bs-target="#exampleModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-pencil-square" viewBox="0 0 16 16">
