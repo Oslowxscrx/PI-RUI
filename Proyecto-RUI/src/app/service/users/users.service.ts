@@ -22,18 +22,21 @@ export class UsersService {
     this.httpOptions);
   }
 
-  getUser(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<any>(url);
+  public getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
+
 
   createUser(user: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, user);
   }
 
-  updateUser(user: any): Observable<any> {
-    const url = `${this.apiUrl}/${user.id}`;
-    return this.http.put<any>(url, user);
+  public updateUsuario(usuario: User): Observable<User> {
+    return this.http.put<User>(
+      `${this.apiUrl}/${usuario.id}`,
+      usuario,
+      this.httpOptions
+    );
   }
 
   deleteUser(id: number): Observable<any> {

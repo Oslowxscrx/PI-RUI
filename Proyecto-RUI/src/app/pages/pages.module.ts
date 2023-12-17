@@ -11,6 +11,8 @@ import { PagesComponent } from './pages.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { UserModalComponent } from './usuarios/user-modal/user-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -22,7 +24,8 @@ import { MatInputModule } from '@angular/material/input';
     EmpleadosComponent,
     RolesComponent,
     UsuariosComponent,
-    PagesComponent
+    PagesComponent,
+    UserModalComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
   ],
   exports: [
     DashboardComponent,

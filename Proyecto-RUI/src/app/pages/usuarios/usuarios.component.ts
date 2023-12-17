@@ -7,6 +7,8 @@ import { User } from 'src/app/interface/user/users';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { RolService } from 'src/app/service/roles.service';
 import { UsersService } from 'src/app/service/users/users.service';
+import { UserModalComponent } from './user-modal/user-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-usuarios',
@@ -46,82 +48,39 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private rolesService: RolService,
     private _usersService: UsersService,
-    private _authService: AuthService,
-    private _formBuilder: FormBuilder,
-    private _router: Router,
-    private errorStateMatcher: ErrorStateMatcher
+    private errorStateMatcher: ErrorStateMatcher,
+    private _dialog: MatDialog,
   ) { }
 
   errorMatcher = this.errorStateMatcher;
 
   ngOnInit(): void {
-    this.initForm();
     this.getRoles();
     this.getUsuarios();
   }
 
-
-  initForm() {
-    this.formGroup = this._formBuilder.group({
-      nombreUsuario: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(20),
-          ],
-        },
-      ],
-      correoUsuario: ['', [Validators.required, Validators.email]],
-      contraseñaUsuario: ['', [Validators.required, Validators.minLength(8)]],
-      // confirmarContraseña: ['', [Validators.required]],
-    }, {
-      validators: this.passwordMatchValidator
+  openModal(): void {
+    const dialogRef = this._dialog.open(UserModalComponent, {
+      height: '500px',
+      width: '550px',
+      data: { /* datos que deseas pasar al componente de contenido del modal */ }
     });
 
-    this.formGroup.valueChanges.subscribe((val) => {
-      this.currentRegister = val;
-      console.log(val);
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        // Realizar acciones después de cerrar el modal
+      }
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.paramsSubscription) {
-      this.paramsSubscription.unsubscribe();
-    }
-  }
-
-  public createUser() {
-    this._authService.register(this.currentRegister).subscribe((res: any) => {
-      console.log(this.currentRegister);
-      this._router.navigate(['dashboard']);
+  abrirModalParaEditar(userId: number): void {
+    const dialogRef = this._dialog.open(UserModalComponent, {
+      height: '500px',
+      width: '550px',
+      data: { userId: userId },
     });
   }
 
-  public onSubmit(): void {
-    if (this.formGroup.valid) {
-      this.createUser();
-    }
-  }
-
-  passwordMatchValidator(formGroup: FormGroup) {
-    const password = formGroup.get('contraseñaUsuario')?.value;
-    const confirmPassword = formGroup.get('confirmarContraseña')?.value;
-
-    if (password !== confirmPassword) {
-      formGroup.get('confirmarContraseña')?.setErrors({ passwordMismatch: true });
-    } else {
-      formGroup.get('confirmarContraseña')?.setErrors(null);
-    }
-
-    return null;
-  }
-
-
-  onPasswordInput() {
-    this.passwordEntered = this.formGroup.get('contraseñaUsuario')?.value.trim().length > 0;
-  }
   
   getRoles() {
     this.rolesService.getRoles().subscribe((data) => {
