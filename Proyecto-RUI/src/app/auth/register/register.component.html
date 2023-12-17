@@ -3,7 +3,7 @@
 
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <!-- Campo de Nombre de Usuario -->
-        <div class="mb-3">
+        <div class="mb-3 w-full">
             <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Nombre de Usuario</label>
             <div class="input-group">
                 <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4" type="text" matInput formControlName="nombreUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off" spellcheck="false" placeholder="Nombre de usuario">

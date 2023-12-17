@@ -1,29 +1,53 @@
+
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <section id="wrapper" class="login-register login-sidebar" style="background-image:url(./assets/images/background/login-register2.jpg);">
     <div class="login-box card">
+        <a href="javascript:void(0)" class="text-center db"><img src="./assets/images/logo-icon3.png" alt="Home" width="120" /><br/>
+            <br>
+            <h4>Módulo de Gestión y Control Activos</h4>
+        </a>
         <div class="card-body">
+            
             <!-- <button routerLink="register"> Register</button> -->
-            <form class="form-horizontal form-material" id="loginform" action="http://localhost:4200/dashboard">
-                <a href="javascript:void(0)" class="text-center db"><img src="./assets/images/logo-icon3.png" alt="Home" width="200" /><br/>
-                    <br>
-                    <h3>Módulo de Gestión y Control Activos</h3>
-                    <a href="register"> registro</a>
-                </a>
-                <div class="form-group m-t-40">
-                    <div class="col-xs-12">
-                        <input class="form-control" type="text" required="" placeholder="Username">
-                    </div>
+            <form  id="loginform"(ngSubmit)="login()" [formGroup]="loginForm">
+                <div class="mb-3">
+                  
+                        <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">
+                            Correo Electrónico
+                        </label>
+                          <input class="appearance-none block w-full  bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4" type="email" matInput formControlName="correoUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off" spellcheck="false" placeholder="Correo Electrónico">
+                          <mat-error *ngIf="loginForm.get('correoUsuario')?.hasError('correoUsuario') && (loginForm.get('correoUsuario')?.touched || loginForm.get('correoUsuario')?.dirty)" class="text-sm">
+                              Por favor, ingrese un correo electrónico <strong>válido</strong>
+                          </mat-error>
+                          <mat-error *ngIf="loginForm.get('correoUsuario')?.hasError('required') && (loginForm.get('correoUsuario')?.touched || loginForm.get('correoUsuario')?.dirty)" class="text-sm">
+                              Este campo es <strong>requerido</strong>
+                          </mat-error>
+                   
                 </div>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <input class="form-control" type="password" required="" placeholder="Password">
+                <div class="mb-3">
+                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-password">
+                      Contraseña
+                    </label>
+                    <div class="flex items-center">
+                      <input class="appearance-none block w-full bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4 mb-3" matInput [type]="hide ? 'password' : 'text'" formControlName="contraseñaUsuario" [errorStateMatcher]="errorMatcher" autocomplete="off" spellcheck="false"
+                        placeholder="******************" (input)="onPasswordInput()">
+                      <button *ngIf="passwordEntered" class="card-actions" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" type="button" [attr.aria-pressed]="hide" style="position: absolute; right: 8px;">
+                        <!-- <mat-icon class="!text-neutral flex items-center justify-center">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> -->
+                      </button>
                     </div>
-                </div>
-                <div class="form-group text-center m-t-20">
+                    <mat-error *ngIf="loginForm.get('contraseñaUsuario')?.hasError('contraseñaUsuario') && (loginForm.get('contraseñaUsuario')?.touched || loginForm.get('contraseñaUsuario')?.dirty)" class="text-sm">
+                      Este campo es <strong>requerido</strong>
+                    </mat-error>
+                  </div>
+                  
+                <div class="form-group text-center m-t-10">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Iniciar Sesión</button>
+                        <!-- <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">Iniciar Sesión</button> -->
+                        <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit" [disabled]="loginForm.invalid || loading" [ngClass]="{ '!text-white !bg-neutral opacity-80': loginForm.invalid || loading }">
+                            Iniciar Sesión
+                          </button>
                     </div>
                 </div>
             </form>

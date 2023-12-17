@@ -7,10 +7,13 @@ import { EmpleadosComponent } from './empleados/empleados.component';
 import { RolesComponent } from './roles/roles.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UserModalComponent } from './usuarios/user-modal/user-modal.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'dashboard', component: PagesComponent,
+    path: 'dashboard',
+    component: PagesComponent,
+    canActivate: [AuthGuard], // Aquí aplicas AuthGuard
     children: [
       { path: '', component: DashboardComponent },
       { path: 'insumos', component: InsumosComponent },
@@ -18,18 +21,13 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent },
       { path: 'usuariosAdmins', component: UsuariosComponent },
       { path: 'usuariosAdmins/:id', component: UserModalComponent },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]
   }
-]
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}
