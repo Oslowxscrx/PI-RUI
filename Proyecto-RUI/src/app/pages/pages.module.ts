@@ -8,7 +8,9 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -27,6 +29,9 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
     DashboardComponent,
