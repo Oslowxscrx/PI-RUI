@@ -1,115 +1,111 @@
 import { Component, OnInit } from '@angular/core';
-import { EmpleadoService } from 'src/app/service/empleado.service';
+import { Employee } from 'src/app/interface/employees/employee';
+import { EmployeeService } from 'src/app/service/empleado.service';
+import { ModalEmployeesComponent } from './employees-modal/modal-employees.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
+import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'app-empleado',
+  selector: 'app-employees',
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.css']
 })
-export class EmpleadosComponent implements OnInit {
-  empleadoEditando = {
-    nombre: '',
-    apellido: '',
-    cedula: '',
-    correo: '',
-    fechaCreacion: ''
-  };
+export class EmployeesComponent implements OnInit {
+  employees: Employee[] = [];
+  loading: boolean = true;
 
-  empleadoIndex: number | null = null;
-  empleados: any[] = [];
-  modalAbierto = false;
-  correoInvalido: boolean | undefined;
-  nombreValido = true;
-  apellidoValido = true;
-  nombreInvalido = false;
-  apellidoInvalido = false;
+  constructor(private _employeeService: EmployeeService, 
+    private _dialog: MatDialog,) 
+  
+  { }
 
-  constructor(private empleadoService: EmpleadoService) { }
-
-  ngOnInit() {
-    this.getEmpleados();
+  ngOnInit(): void {
+    this.getEmployees()
   }
 
-  getEmpleados() {
-    this.empleadoService.getEmpleados().subscribe((data) => {
-      this.empleados = data;
+  getEmployees() {
+    this.loading = true;
+    this._employeeService.getEmployees().subscribe({
+      next: (response: Employee[]) => {
+        console.log('empleados',response);
+        this.handleResponse(response);
+      },
+      error: (error) => {
+        this.handleError(error);
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  private handleResponse(response: any): void {
+    this.employees = response;
+  this.loading = false;
+}
+
+private handleError(error: any): void {
+  if (error.status === 404) {
+    console.error("Error al obtener empleado:", error.error.message);
+    this.employees = error.error.data
+  }
+  this.loading = false;
+}
+
+openModal(): void {
+  const dialogRef = this._dialog.open(ModalEmployeesComponent, {
+    height: '580px',
+    width: '550px',
+    data: { /* datos que deseas pasar al componente de contenido del modal */ }
+  });
+
+  dialogRef.afterClosed().subscribe((result: any) => {
+    if (result) {
+      // Realizar acciones después de cerrar el modal
+    }
+  });
+}
+
+abrirModalParaEditar(employeeId: number): void {
+  const dialogRef = this._dialog.open(ModalEmployeesComponent, {
+    height: '580px',
+    width: '550px',
+    data: { employeeId: employeeId },
+  });
+}
+
+deleteUser(employee: Employee): void {
+  this._employeeService.deleteEmployeeById(employee.id)
+    .pipe(
+      finalize(() => {
+        // this._router.navigate(['/system/usuarios']);
+      })
+    )
+    .subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.handleResponse(res);
+      }
     });
-  }
+}
 
-  guardarEmpleado() {
-    //Verificar que la cedula contenga 10 digitos
-    const cedulaValida = /^\d{10}$/.test(this.empleadoEditando.cedula);
-    if (!cedulaValida) {
-    // Mostrar mensaje de error o tomar la acción correspondiente
-    console.log('La cédula debe contener exactamente 10 dígitos numéricos.');
-    return;
-    }
-     // Verificar si el correo contiene una "@"
-    if (!this.empleadoEditando.correo.includes('@')) {
-    // Mostrar alerta de error
-      this.correoInvalido = true;
-    return;
-    }
-    
-    
-     // Verificar que el nombre y apellido solo contengan letras
-      this.nombreInvalido = !/^[A-Za-z]+$/.test(this.empleadoEditando.nombre);
-      this.apellidoInvalido = !/^[A-Za-z]+$/.test(this.empleadoEditando.apellido);
-      if (this.nombreInvalido || this.apellidoInvalido) {
-      // Mostrar alerta de error
-      console.log('El nombre y el apellido solo pueden contener letras.');
-      return;
-      }
-    
-    
-    if (this.empleadoEditando.nombre && this.empleadoEditando.apellido && this.empleadoEditando.cedula && this.empleadoEditando.correo) {
-      if (this.empleadoIndex !== null && this.empleadoIndex !== undefined) {
-        // Editar empleado existente
-        this.empleadoService.updateEmpleado(this.empleadoEditando).subscribe(() => {
-          if (this.empleadoIndex !== null && this.empleadoIndex !== undefined && this.empleados[this.empleadoIndex]) {
-            this.empleados[this.empleadoIndex] = { ...this.empleadoEditando };
-          }
-          this.limpiarFormulario();
-          this.modalAbierto = false;
-          this.getEmpleados(); // Actualizar lista de empleados
-        });
-      } else {
-        // Agregar nuevo empleado
-        const fechaActual = new Date();
-        this.empleadoEditando.fechaCreacion = fechaActual.toISOString();
-        this.empleadoService.createEmpleado(this.empleadoEditando).subscribe(() => {
-          this.empleados.push({ ...this.empleadoEditando });
-          this.limpiarFormulario();
-          this.modalAbierto = false;
-          this.getEmpleados(); // Actualizar lista de empleados
-        });
-      }
-    }
-  }
 
-  editarEmpleado(empleado: any, index: number) {
-    this.empleadoEditando = { ...empleado };
-    this.empleadoIndex = index;
-    this.modalAbierto = true;
-  }
+openDialogDeleteEmployee(employee: Employee): void {
+  const dialogRef = this._dialog.open(ModalDeleteComponent, {
+    height: '350px',
+    width: '700px',
+    data: {
+      title: '¿ Está seguro de eliminar este usuario ?',
+      message:
+        'El usuario sera eliminado definitivamente del sistema.',
+      button: 'Eliminar',
+    },
+  });
 
-  eliminarEmpleado(index: number) {
-    const empleado = this.empleados[index];
-    if (empleado && empleado.id) {
-      this.empleadoService.deleteEmpleado(empleado.id).subscribe(() => {
-        this.empleados.splice(index, 1);
-      });
-    }
-  }
-
-  limpiarFormulario() {
-    this.empleadoEditando = {
-      nombre: '',
-      apellido: '',
-      cedula: '',
-      correo: '',
-      fechaCreacion: ''
-    };
-  }
-
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      this.deleteUser(employee);
+    }
+    });
+  }
 }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
-import { InsumosComponent } from './insumos/insumos.component';
-import { EmpleadosComponent } from './empleados/empleados.component';
+import { AssetsComponent } from './insumos/insumos.component';
+import { EmployeesComponent } from './empleados/empleados.component';
 import { RolesComponent } from './roles/roles.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UserModalComponent } from './usuarios/user-modal/user-modal.component';
@@ -15,9 +15,9 @@ const routes: Routes = [
     component: PagesComponent,
     canActivate: [AuthGuard], // Aquí aplicas AuthGuard
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'insumos', component: InsumosComponent },
-      { path: 'empleados', component: EmpleadosComponent },
+      { path: 'login', component: DashboardComponent },
+      { path: 'insumos', component: AssetsComponent },
+      { path: 'empleados', component: EmployeesComponent },
       { path: 'roles', component: RolesComponent },
       { path: 'usuariosAdmins', component: UsuariosComponent },
       { path: 'usuariosAdmins/:id', component: UserModalComponent },

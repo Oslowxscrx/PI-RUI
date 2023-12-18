@@ -1,36 +1,48 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/enviroments/enviroment';
+import { Employee } from '../interface/employees/employee';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmpleadoService {
-  private apiUrl = ' http://localhost:3000/empleados';
+export class EmployeeService {
+  private API_URL = environment.API_URL + 'employees';
+
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) { }
 
-  getEmpleados(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.API_URL,
+    this.httpOptions);
   }
 
-  getEmpleado(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<any>(url);
+  public getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.API_URL}/${id}`);
   }
 
-  createEmpleado(user: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, user);
+  createEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.API_URL,
+      employee,
+      this.httpOptions)
   }
 
-  updateEmpleado(user: any): Observable<any> {
-    const url = `${this.apiUrl}/${user.id}`;
-    return this.http.put<any>(url, user);
+  public updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.patch<Employee>(
+      `${this.API_URL}/${employee.id}`,
+      employee,
+      this.httpOptions
+    );
   }
 
-  deleteEmpleado(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<any>(url);
+  public deleteEmployeeById(employeeId: number): Observable<Employee> {
+    return this.http.delete<Employee>(
+      `${this.API_URL}/${employeeId}`,
+      this.httpOptions
+    );
   }
 }
-

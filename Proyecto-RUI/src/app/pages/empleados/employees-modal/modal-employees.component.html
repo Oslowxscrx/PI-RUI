@@ -1,0 +1,165 @@
+<!--  -->
+<div id="example" tabindex="-1" aria-labelledby="exampleLabel" aria-hidden="true">
+  <div class="mr-4 ml-4 pt-4" role="document">
+    <form [formGroup]="formGroup">
+      <div class="-content">
+        <div class="-header">
+          <h5 class="-title text-center font-bold text-lg" id="exampleLabel">{{title}}</h5>
+        </div>
+        <div class="-body">
+
+          <!-- Campo de cedula -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Cedula</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="number" matInput formControlName="cedula" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="Cédula">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('cedula')?.hasError('cedula') && (formGroup.get('cedula')?.touched || formGroup.get('cedula')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un numero de cédula <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('cedula')?.hasError('required') && (formGroup.get('cedula')?.touched || formGroup.get('cedula')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('cedula')
+          ?.hasError('minlength') ||
+          formGroup
+          .get('cedula')
+          ?.hasError('pattern')
+      ">
+              El numero de cédula es muy<strong> pequeño.</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('cedula')
+          ?.hasError('maxlength') ||
+          formGroup
+          .get('cedula')
+          ?.hasError('pattern')
+      ">
+              El numero de cédula es muy <strong>grande</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de nombre -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2"
+              for="grid-last-name">Nombre</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="text" matInput formControlName="nombre" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="Correo Electrónico">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('nombre')?.hasError('nombre') && (formGroup.get('nombre')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un nombre <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('nombre')?.hasError('required') && (formGroup.get('nombre')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('nombre')
+          ?.hasError('minlength') ||
+          formGroup
+          .get('nombre')
+          ?.hasError('pattern')
+      ">
+              El nombre es muy<strong> pequeño.</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('nombre')
+          ?.hasError('maxlength') ||
+          formGroup
+          .get('nombre')
+          ?.hasError('pattern')
+      ">
+              El nombre es muy <strong>grande</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de Apellido -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2"
+              for="grid-last-name">Apelldio</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="text" matInput formControlName="apellido" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="Correo Electrónico">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('apellido')?.hasError('apellido') && (formGroup.get('apellido')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un apellido <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('apellido')?.hasError('required') && (formGroup.get('apellido')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('apellido')
+          ?.hasError('minlength') ||
+          formGroup
+          .get('apellido')
+          ?.hasError('pattern')
+      ">
+              El apellido es muy<strong> pequeño.</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('apellido')
+          ?.hasError('maxlength') ||
+          formGroup
+          .get('apellido')
+          ?.hasError('pattern')
+      ">
+              El apellido es muy <strong>grande</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de Correo Electrónico -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Correo
+              Electrónico</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="email" matInput formControlName="correo" [errorStateMatcher]="errorMatcher"
+                autocomplete="off" spellcheck="false" placeholder="Correo Electrónico">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('correo')?.hasError('correo') && (formGroup.get('correo')?.touched || formGroup.get('correo')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un correo electrónico <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('correo')?.hasError('required') && (formGroup.get('correo')?.touched || formGroup.get('correo')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+          </div>
+
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button class="btn btn-secondary mr-2" (click)="closeModal()">Cancelar</button>
+          <button *ngIf="button === true" type="button" class="btn btn-primary" (click)="onSubmit()">Crear</button>
+          <button *ngIf="button === false" type="button" class="btn btn-primary"
+            (click)="onSubmitUpdate()">Actualizar</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

@@ -1,129 +1,91 @@
 import { Component, OnInit } from '@angular/core';
-import { EmpleadoService } from 'src/app/service/empleado.service';
-import { InsumoService } from 'src/app/service/insumos.service';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Asegúrate de importar ReactiveFormsModule si estás usando formularios reactivos
+import { AssetsService } from 'src/app/service/insumos.service';
 
 @Component({
-  selector: 'app-insumos',
+  selector: 'app-assets',
   templateUrl: './insumos.component.html',
   styleUrls: ['./insumos.component.css']
 })
-export class InsumosComponent implements OnInit {
-  insumoEditando = {
-    codigo: '',
-    nombre: '',
-    descripcion: '',
-    asignadoA: '',
-    fechaCreacion: '',
-    vidaUtilAnios: 0
-  };
-
-  insumoIndex: number | null = null;
-  insumos: any[] = [];
-  modalAbierto = false;
-
-  empleados: any[] = [];
-
-
-  currentPage = 1;
-  itemsPerPage = 5;
-
-
+export class AssetsComponent implements OnInit {
+  assets: any[] = [];
+  assetForm: FormGroup;
+  showAddForm: boolean = false;
 
   constructor(
-    private empleadoService: EmpleadoService,
-    private insumoService: InsumoService
-  ) { }
-
-  ngOnInit() {
-    this.getEmpleados();
-    this.getInsumos();
-  }
-
-  getEmpleados() {
-    this.empleadoService.getEmpleados().subscribe((data) => {
-      this.empleados = data;
+    private assetsService: AssetsService,
+    private formBuilder: FormBuilder
+  ) {
+    this.assetForm = this.formBuilder.group({
+      codigo: ['', Validators.required],
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      cedula: [''], // Puedes ajustar las validaciones según tus requisitos
+      fechaAsignacion: ['', Validators.required],
+      vidaUtil: ['', Validators.required]
     });
   }
 
-  getInsumos() {
-    this.insumoService.getInsumos().subscribe((data) => {
-      this.insumos = data;
-    });
+  ngOnInit(): void {
+    this.loadAssets();
   }
 
-  guardarInsumo() {
-    if (
-      this.insumoEditando.codigo &&
-      this.insumoEditando.nombre &&
-      this.insumoEditando.descripcion &&
-      this.insumoEditando.asignadoA &&
-      this.insumoEditando.vidaUtilAnios >= 0
-    ) {
-      if (this.insumoIndex !== null && this.insumoIndex !== undefined) {
-        this.insumos[this.insumoIndex] = { ...this.insumoEditando };
-        this.insumoService.updateInsumo(this.insumoEditando).subscribe(() => {
-          this.limpiarFormulario();
-          this.modalAbierto = false;
-        });
-      } else {
-        this.insumoEditando.fechaCreacion = this.obtenerFechaActual();
-        this.insumoService.createInsumo(this.insumoEditando).subscribe((data) => {
-          this.insumos.push(data);
-          this.limpiarFormulario();
-          this.modalAbierto = false;
-          const totalPages = Math.ceil(this.insumos.length / this.itemsPerPage);
-          if (this.currentPage > totalPages) {
-            this.currentPage = totalPages;
-          }
-        });
+  loadAssets(): void {
+    this.assetsService.getAllAssets().subscribe(
+      (response) => {
+        this.assets = response.data; // Asegúrate de ajustar la estructura de datos según la respuesta del servidor
+      },
+      (error) => {
+        console.error('Error fetching assets:', error);
       }
+    );
+  }
+
+  createAsset(): void {
+    if (this.assetForm.valid) {
+      this.assetsService.createAsset(this.assetForm.value).subscribe(
+        (response) => {
+          console.log('Asset created:', response);
+          this.assetForm.reset();
+          this.loadAssets();
+        },
+        (error) => {
+          console.error('Error creating asset:', error);
+        }
+      );
+    } else {
+      console.error('Invalid asset data.');
     }
   }
 
-  editarInsumo(insumo: any, index: number) {
-    this.insumoEditando = { ...insumo };
-    this.insumoIndex = index;
-    this.modalAbierto = true;
+  updateAsset(id: number): void {
+    if (this.assetForm.valid) {
+      this.assetsService.updateAsset(id, this.assetForm.value).subscribe(
+        (response) => {
+          console.log('Asset updated:', response);
+          this.assetForm.reset();
+          this.loadAssets();
+        },
+        (error) => {
+          console.error('Error updating asset:', error);
+        }
+      );
+    } else {
+      console.error('Invalid asset data.');
+    }
   }
 
-  eliminarInsumo(index: number) {
-    const insumo = this.insumos[index];
-    this.insumoService.deleteInsumo(insumo.id).subscribe(() => {
-      this.insumos.splice(index, 1);
-      const totalPages = Math.ceil(this.insumos.length / this.itemsPerPage);
-      if (this.currentPage > totalPages) {
-        this.currentPage = totalPages;
+  deleteAsset(id: number): void {
+    this.assetsService.deleteAsset(id).subscribe(
+      () => {
+        console.log('Asset deleted');
+        this.loadAssets();
+      },
+      (error) => {
+        console.error('Error deleting asset:', error);
       }
-    });
+    );
   }
 
-  limpiarFormulario() {
-    this.insumoEditando = {
-      codigo: '',
-      nombre: '',
-      descripcion: '',
-      asignadoA: '',
-      fechaCreacion: '',
-      vidaUtilAnios: 0
-    };
-    this.insumoIndex = null;
-  }
-
-  obtenerFechaActual() {
-    const fecha = new Date();
-    return fecha.toISOString();
-  }
-
-  onPageChange(pageNumber: number) {
-    this.currentPage = pageNumber;
-  }
-
-  getPaginatedInsumos() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.insumos.slice(startIndex, endIndex);
-  }
-
-
+  // Puedes agregar más métodos según tus necesidades, como obtener un solo activo, etc.
 }

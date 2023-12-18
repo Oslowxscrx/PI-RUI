@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AssetsComponent } from './insumos.component';
 
-import { InsumosComponent } from './insumos.component';
 
-describe('InsumosComponent', () => {
-  let component: InsumosComponent;
-  let fixture: ComponentFixture<InsumosComponent>;
+
+describe('AssentsComponent', () => {
+  let component: AssetsComponent;
+  let fixture: ComponentFixture<AssetsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [InsumosComponent]
+      declarations: [AssetsComponent]
     });
-    fixture = TestBed.createComponent(InsumosComponent);
+    fixture = TestBed.createComponent(AssetsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
