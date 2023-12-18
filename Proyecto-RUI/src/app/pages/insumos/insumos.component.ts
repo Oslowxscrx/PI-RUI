@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Asegúrate de importar ReactiveFormsModule si estás usando formularios reactivos
+
+
+import { MatDialog } from '@angular/material/dialog';
+
+import { finalize } from 'rxjs';
+import { Assets } from 'src/app/interface/assets/assets';
 import { AssetsService } from 'src/app/service/insumos.service';
+import { ModalAssetsComponent } from './assets-modal/modal-assets.component';
 
 @Component({
   selector: 'app-assets',
@@ -8,84 +14,100 @@ import { AssetsService } from 'src/app/service/insumos.service';
   styleUrls: ['./insumos.component.css']
 })
 export class AssetsComponent implements OnInit {
-  assets: any[] = [];
-  assetForm: FormGroup;
-  showAddForm: boolean = false;
+  assets: Assets[] = [];
+  loading: boolean = true;
 
-  constructor(
-    private assetsService: AssetsService,
-    private formBuilder: FormBuilder
-  ) {
-    this.assetForm = this.formBuilder.group({
-      codigo: ['', Validators.required],
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      cedula: [''], // Puedes ajustar las validaciones según tus requisitos
-      fechaAsignacion: ['', Validators.required],
-      vidaUtil: ['', Validators.required]
-    });
-  }
+  constructor(private _assetService: AssetsService, 
+    private _dialog: MatDialog,) 
+  
+  { }
 
   ngOnInit(): void {
-    this.loadAssets();
+    this.getAssets()
   }
 
-  loadAssets(): void {
-    this.assetsService.getAllAssets().subscribe(
-      (response) => {
-        this.assets = response.data; // Asegúrate de ajustar la estructura de datos según la respuesta del servidor
+  getAssets() {
+    this.loading = true;
+    this._assetService.getAssets().subscribe({
+      next: (response: Assets[]) => {
+        console.log('insumos',response);
+        this.handleResponse(response);
       },
-      (error) => {
-        console.error('Error fetching assets:', error);
-      }
-    );
-  }
-
-  createAsset(): void {
-    if (this.assetForm.valid) {
-      this.assetsService.createAsset(this.assetForm.value).subscribe(
-        (response) => {
-          console.log('Asset created:', response);
-          this.assetForm.reset();
-          this.loadAssets();
-        },
-        (error) => {
-          console.error('Error creating asset:', error);
-        }
-      );
-    } else {
-      console.error('Invalid asset data.');
-    }
-  }
-
-  updateAsset(id: number): void {
-    if (this.assetForm.valid) {
-      this.assetsService.updateAsset(id, this.assetForm.value).subscribe(
-        (response) => {
-          console.log('Asset updated:', response);
-          this.assetForm.reset();
-          this.loadAssets();
-        },
-        (error) => {
-          console.error('Error updating asset:', error);
-        }
-      );
-    } else {
-      console.error('Invalid asset data.');
-    }
-  }
-
-  deleteAsset(id: number): void {
-    this.assetsService.deleteAsset(id).subscribe(
-      () => {
-        console.log('Asset deleted');
-        this.loadAssets();
+      error: (error) => {
+        this.handleError(error);
       },
-      (error) => {
-        console.error('Error deleting asset:', error);
+      complete: () => {
+        this.loading = false;
       }
-    );
+    })
   }
 
-  // Puedes agregar más métodos según tus necesidades, como obtener un solo activo, etc.
+  private handleResponse(response: any): void {
+    this.assets = response;
+  this.loading = false;
+}
+
+private handleError(error: any): void {
+  if (error.status === 404) {
+    console.error("Error al obtener insumo:", error.error.message);
+    this.assets = error.error.data
+  }
+  this.loading = false;
+}
+
+openModal(): void {
+  const dialogRef = this._dialog.open(ModalAssetsComponent, {
+    height: '600px',
+    width: '550px',
+    data: { /* datos que deseas pasar al componente de contenido del modal */ }
+  });
+
+  dialogRef.afterClosed().subscribe((result: any) => {
+    if (result) {
+      // Realizar acciones después de cerrar el modal
+    }
+  });
+}
+
+abrirModalParaEditar(assetId: number): void {
+  const dialogRef = this._dialog.open(ModalAssetsComponent, {
+    height: '600px',
+    width: '550px',
+    data: { assetId: assetId },
+  });
+}
+
+deleteUser(asset: Assets): void {
+  this._assetService.deleteAssetById(asset.id)
+    .pipe(
+      finalize(() => {
+        // this._router.navigate(['/system/usuarios']);
+      })
+    )
+    .subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.handleResponse(res);
+      }
+    });
+}
+
+
+openDialogDeleteEmployee(asset: Assets): void {
+  const dialogRef = this._dialog.open(ModalAssetsComponent, {
+    height: '350px',
+    width: '700px',
+    data: {
+      title: '¿ Está seguro de eliminar este insumo ?',
+      message:
+        'El insumo sera eliminado definitivamente del sistema.',
+      button: 'Eliminar',
+    },
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      this.deleteUser(asset);
+    }
+    });
+  }
 }

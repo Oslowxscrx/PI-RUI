@@ -18,6 +18,7 @@ import { AuthInterceptor } from '../interceptors/auth/auth.interceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { ModalEmployeesComponent } from './empleados/employees-modal/modal-employees.component';
 import { ModalDeleteComponent } from './empleados/modal-delete/modal-delete.component';
+import { ModalAssetsComponent } from './insumos/assets-modal/modal-assets.component';
 
 
 
@@ -32,7 +33,8 @@ import { ModalDeleteComponent } from './empleados/modal-delete/modal-delete.comp
     PagesComponent,
     UserModalComponent,
     ModalEmployeesComponent,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    ModalAssetsComponent,
   ],
   imports: [
     CommonModule,

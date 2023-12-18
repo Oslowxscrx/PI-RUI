@@ -1,0 +1,149 @@
+<!--  -->
+<div id="example" tabindex="-1" aria-labelledby="exampleLabel" aria-hidden="true">
+  <div class="mr-4 ml-4 pt-4" role="document">
+    <form [formGroup]="formGroup">
+      <div class="-content">
+        <div class="-header">
+          <h5 class="-title text-center font-bold text-lg" id="exampleLabel">{{title}}</h5>
+        </div>
+        <div class="-body">
+
+          <!-- Campo de codigo -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2"
+              for="grid-last-name">Codigo</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="text" matInput formControlName="codigo" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="Codigo">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('codigo')?.hasError('codigo') && (formGroup.get('codigo')?.touched || formGroup.get('codigo')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un codigo <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('codigo')?.hasError('required') && (formGroup.get('codigo')?.touched || formGroup.get('codigo')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de nombre -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Nombre
+              Insumo</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="text" matInput formControlName="nombre" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="nombre Insumo">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('nombre')?.hasError('nombre') && (formGroup.get('nombre')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un nombre <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('nombre')?.hasError('required') && (formGroup.get('nombre')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('nombre')
+          ?.hasError('minlength') ||
+          formGroup
+          .get('nombre')
+          ?.hasError('pattern')
+      ">
+              El nombre es muy<strong> pequeño.</strong>
+            </mat-error>
+            <mat-error *ngIf="
+          formGroup
+          .get('nombre')
+          ?.hasError('maxlength') ||
+          formGroup
+          .get('nombre')
+          ?.hasError('pattern')
+      ">
+              El nombre es muy <strong>grande</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de descripcion -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2"
+              for="grid-last-name">Descripcion</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="text" matInput formControlName="descripcion" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="descripcion Insumo">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('descripcion')?.hasError('descripcion') && (formGroup.get('descripcion')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un descripcion <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('descripcion')?.hasError('required') && (formGroup.get('descripcion')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de cedula -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Cédula
+              Empleado
+            </label>
+            <div class="input-group">
+              <select class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+              mat-select formControlName="cedula">
+              <option *ngFor="let employee of employees" [value]="employee.cedula">{{employee.cedula}}</option>
+            </select>
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('cedula')?.hasError('cedula') && (formGroup.get('cedula')?.touched || formGroup.get('cedula')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese una cedula <strong>válida</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('cedula')?.hasError('required') && (formGroup.get('cedula')?.touched || formGroup.get('cedula')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+          </div>
+
+          <!-- Campo de vidaUtil -->
+          <div class="form-group">
+            <label class="block uppercase tracking-wide text-darker text-xs font-bold mb-2" for="grid-last-name">Vida
+              Util</label>
+            <div class="input-group">
+              <input class="form-control bg-grey-lighter text-dark border border-grey-lighter rounded py-3 px-4"
+                type="number" matInput formControlName="vidaUtil" [errorStateMatcher]="errorMatcher" autocomplete="off"
+                spellcheck="false" placeholder="vida util del insumo">
+            </div>
+            <mat-error
+              *ngIf="formGroup.get('vidaUtil')?.hasError('vidaUtil') && (formGroup.get('vidaUtil')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Por favor, ingrese un vidaUtil <strong>válido</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="formGroup.get('vidaUtil')?.hasError('required') && (formGroup.get('vidaUtil')?.touched || formGroup.get('nombre')?.dirty)"
+              class="text-sm">
+              Este campo es <strong>requerido</strong>
+            </mat-error>
+          </div>
+
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button class="btn btn-secondary mr-2" (click)="closeModal()">Cancelar</button>
+          <button *ngIf="button === true" type="button" class="btn btn-primary" (click)="onSubmit()">Crear</button>
+          <button *ngIf="button === false" type="button" class="btn btn-primary"
+            (click)="onSubmitUpdate()">Actualizar</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

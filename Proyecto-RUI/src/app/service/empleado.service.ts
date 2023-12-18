@@ -21,6 +21,10 @@ export class EmployeeService {
     this.httpOptions);
   }
 
+  getEmployeeByCedula(cedula: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.API_URL}/employees/${cedula}`);
+  }
+
   public getEmployeeById(id: number): Observable<Employee> {
     return this.http.get<Employee>(`${this.API_URL}/${id}`);
   }

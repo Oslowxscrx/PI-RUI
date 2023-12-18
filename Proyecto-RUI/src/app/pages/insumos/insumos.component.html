@@ -1,44 +1,12 @@
 <div class="container mt-4">
   <h1>Insumos</h1>
   <hr>
-  <button class="btn btn-primary mb-3" (click)="showAddForm = true">Agregar Insumo</button>
-  <hr>
-  <div *ngIf="showAddForm" class="mb-3">
-    <h2>Registro de Insumo</h2>
-    <form [formGroup]="assetForm" (ngSubmit)="createAsset()">
-      <div class="mb-3">
-        <label for="codigo" class="form-label">Código:</label>
-        <input type="text" id="codigo" class="form-control" formControlName="codigo" required>
-      </div>
-
-      <div class="mb-3">
-        <label for="nombre" class="form-label">Nombre:</label>
-        <input type="text" id="nombre" class="form-control" formControlName="nombre" required>
-      </div>
-
-      <div class="mb-3">
-        <label for="descripcion" class="form-label">Descripción:</label>
-        <input type="text" id="descripcion" class="form-control" formControlName="descripcion" required>
-      </div>
-
-      <div class="mb-3">
-        <label for="cedula" class="form-label">Cédula:</label>
-        <input type="number" id="cedula" class="form-control" formControlName="cedula">
-      </div>
-
-      <div class="mb-3">
-        <label for="fechaAsignacion" class="form-label">Fecha de Asignación:</label>
-        <input type="text" id="fechaAsignacion" class="form-control" formControlName="fechaAsignacion" required>
-      </div>
-
-      <div class="mb-3">
-        <label for="vidaUtil" class="form-label">Vida Útil:</label>
-        <input type="number" id="vidaUtil" class="form-control" formControlName="vidaUtil" required>
-      </div>
-
-      <button type="submit" class="btn btn-success">Guardar</button>
-    </form>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button type="button" (click)="openModal()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Agregar
+    </button>
   </div>
+  <hr>
 
   <table *ngIf="assets.length > 0" class="table">
     <thead>
@@ -46,24 +14,43 @@
         <th>Código</th>
         <th>Nombre</th>
         <th>Descripción</th>
-        <th>Cédula</th>
         <th>Fecha Asignación</th>
         <th>Vida Útil</th>
-        <th>Acciones</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let asset of assets">
+      <tr *ngFor="let asset of assets ">
         <td>{{ asset.codigo }}</td>
         <td>{{ asset.nombre }}</td>
         <td>{{ asset.descripcion }}</td>
-        <td>{{ asset.cedula }}</td>
+        <td *ngIf="asset.employee">{{ asset.employee.cedula }}</td>
         <td>{{ asset.fechaAsignacion }}</td>
         <td>{{ asset.vidaUtil }}</td>
         <td>
-          <button class="btn btn-sm btn-primary" (click)="updateAsset(asset.id)">Editar</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteAsset(asset.id)">Eliminar</button>
-        </td>
+          <button type="button" class="btn btn-primary" (click)="abrirModalParaEditar(asset.id)" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+          </svg>
+        </button>
+  
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="openDialogDeleteEmployee(asset)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-trash3-fill" viewBox="0 0 16 16">
+            <path
+              d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+          </svg>
+        </button>
+      </td>
+        
       </tr>
     </tbody>
   </table>

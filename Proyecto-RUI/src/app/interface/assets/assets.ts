@@ -9,5 +9,5 @@ export interface Assets {
     deletedAt: Date;
     fechaAsignacion: string;
     vidaUtil: number;
-    employee: Employee;
-  }
+    employee: Employee; // Aquí agregamos el empleado
+}

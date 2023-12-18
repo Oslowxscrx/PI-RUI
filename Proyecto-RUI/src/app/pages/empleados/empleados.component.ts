@@ -95,9 +95,9 @@ openDialogDeleteEmployee(employee: Employee): void {
     height: '350px',
     width: '700px',
     data: {
-      title: '¿ Está seguro de eliminar este usuario ?',
+      title: '¿ Está seguro de eliminar este empleado ?',
       message:
-        'El usuario sera eliminado definitivamente del sistema.',
+        'El empleado sera eliminado definitivamente del sistema.',
       button: 'Eliminar',
     },
   });
